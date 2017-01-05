@@ -519,8 +519,16 @@
                             if (key in params) {
                                 doubledParams[key] = value;
                             } else {
-                                params[key] = value;
-                            }
+                                if (key.endsWith("[]")) {
+                                    subkey = key.substr(0, key.length-2);
+                                    if (!params[subkey]) {
+                                        params[subkey] = [];
+                                    }
+                                    params[subkey].push(value);
+                                } else {
+                                    params[key] = value;
+                                }
+                           }
                         }
                     });
 
